@@ -186,6 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
     opt.addEventListener('click', () => {
       document.querySelectorAll('.del-opt').forEach(o => o.classList.remove('active-del'));
       opt.classList.add('active-del');
+      const radio = opt.querySelector('input[name="del"]');
+      if (radio) {
+        radio.checked = true;
+        renderCheckoutSummary();
+      }
     });
   });
 });
@@ -215,11 +220,18 @@ function showPage(id) {
   if (id === 'checkout') renderCheckoutSummary();
   if (id === 'wishlist') renderWishlistPage();
   if (id === 'home') updateRecentlyViewed();
+  setTimeout(checkAndReveal, 60);
+  setTimeout(checkAndReveal, 250);
 }
 
 function scrollToSection(id) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function navigateToSection(id) {
+  showPage('home');
+  setTimeout(() => scrollToSection(id), 120);
 }
 
 // ── ANNOUNCEMENT BAR ──────────────────────────────────────────
@@ -318,12 +330,48 @@ function renderCategories() {
 function filterByCategory(cat) {
   showPage('shop');
   setTimeout(() => {
-    // uncheck all, check selected
-    document.querySelectorAll('.cat-cb').forEach(cb => {
-      cb.checked = cb.value === cat;
+    // Uncheck all, check selected
+    document.querySelectorAll('.cat-cb, .cat-mob').forEach(cb => {
+      cb.checked = (cb.value === cat);
     });
     applyFilters();
   }, 100);
+}
+
+function handleCategoryChange(changedInput) {
+  const isAll = changedInput.value === 'all';
+  const isChecked = changedInput.checked;
+  const isMob = changedInput.classList.contains('cat-mob');
+  const selector = isMob ? '.cat-mob' : '.cat-cb';
+  const otherSelector = isMob ? '.cat-cb' : '.cat-mob';
+
+  if (isAll) {
+    if (isChecked) {
+      document.querySelectorAll('.cat-cb, .cat-mob').forEach(cb => {
+        cb.checked = (cb.value === 'all');
+      });
+    } else {
+      changedInput.checked = true;
+    }
+  } else {
+    const allCbs = document.querySelectorAll(selector);
+    const specificChecked = [...allCbs].filter(cb => cb.value !== 'all' && cb.checked);
+    const allBox = [...allCbs].find(cb => cb.value === 'all');
+
+    if (specificChecked.length > 0) {
+      if (allBox) allBox.checked = false;
+    } else {
+      if (allBox) allBox.checked = true;
+    }
+
+    // Sync to other selector
+    document.querySelectorAll(otherSelector).forEach(cb => {
+      const match = [...allCbs].find(c => c.value === cb.value);
+      if (match) cb.checked = match.checked;
+    });
+  }
+
+  applyFilters();
 }
 
 function createProductCard(p, showWishlist = true) {
@@ -364,7 +412,6 @@ function renderStars(rating) {
   let s = '';
   for (let i = 1; i <= 5; i++) {
     if (rating >= i) s += '★';
-    else if (rating >= i - 0.5) s += '☆';
     else s += '☆';
   }
   return s;
@@ -415,12 +462,11 @@ function applyFilters() {
   let products = [...PRODUCTS];
 
   // Category
-  const catCbs = [...document.querySelectorAll('.cat-cb')];
-  const mobCats = [...document.querySelectorAll('.cat-mob')];
-  const allCats = [...catCbs, ...mobCats];
-  const selectedCats = allCats.filter(cb => cb.checked && cb.value !== 'all').map(cb => cb.value);
-  const allChecked = allCats.some(cb => cb.checked && cb.value === 'all');
-  if (!allChecked && selectedCats.length > 0) {
+  const checkedBoxes = [...document.querySelectorAll('.cat-cb:checked')];
+  const isAll = checkedBoxes.some(cb => cb.value === 'all');
+  const selectedCats = checkedBoxes.filter(cb => cb.value !== 'all').map(cb => cb.value);
+
+  if (!isAll && selectedCats.length > 0) {
     products = products.filter(p => selectedCats.includes(p.category));
   }
 
@@ -460,7 +506,7 @@ function applyFilters() {
 }
 
 function clearFilters() {
-  document.querySelectorAll('.cat-cb, .cat-mob').forEach(cb => { cb.checked = cb.value === 'all'; });
+  document.querySelectorAll('.cat-cb, .cat-mob').forEach(cb => { cb.checked = (cb.value === 'all'); });
   const allPr = document.querySelector('input[name="pr"][value="all"]');
   if (allPr) allPr.checked = true;
   const allRt = document.querySelector('input[name="rt"][value="all"]');
@@ -470,6 +516,8 @@ function clearFilters() {
   });
   const sortEl = document.getElementById('sort-sel');
   if (sortEl) sortEl.value = 'featured';
+  const mobSort = document.querySelector('input[name="mob-sort"][value="featured"]');
+  if (mobSort) mobSort.checked = true;
   filteredProducts = [...PRODUCTS];
   renderShopGrid();
 }
@@ -844,7 +892,8 @@ function renderCheckoutSummary() {
   const box = document.getElementById('co-summary-box');
   if (!box) return;
   const total = cartTotal();
-  const shipping = total >= 100 ? 0 : 8;
+  const delMethod = document.querySelector('input[name="del"]:checked')?.value || 'standard';
+  const shipping = total === 0 ? 0 : (delMethod === 'express' ? 18 : (total >= 100 ? 0 : 8));
   const items = cart.map(item => {
     const p = PRODUCTS.find(x => x.id === item.id);
     if (!p) return '';
@@ -863,7 +912,7 @@ function renderCheckoutSummary() {
   <div class="co-sum-title">ORDER SUMMARY</div>
   ${items || '<p style="color:var(--fg3);font-size:0.85rem;margin-bottom:16px">No items in cart</p>'}
   <div class="co-sum-line"><span>Subtotal</span><span>$${total.toFixed(2)}</span></div>
-  <div class="co-sum-line"><span>Shipping</span><span>${shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2)}</span></div>
+  <div class="co-sum-line"><span>Shipping (${delMethod === 'express' ? 'Express' : 'Standard'})</span><span>${shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2)}</span></div>
   <div class="co-sum-line"><span>Discount</span><span>—</span></div>
   <div class="co-sum-total"><span>TOTAL</span><span>$${(total + shipping).toFixed(2)}</span></div>
   <p style="font-size:0.72rem;color:var(--fg4);margin-top:12px">&#128274; Taxes calculated at checkout.</p>`;
@@ -874,6 +923,8 @@ function placeOrder() {
   cart = [];
   saveCart();
   updateCounts();
+  renderCart();
+  renderCheckoutSummary();
   showToast('🎉 Order placed! Thank you for shopping with ATZ.');
   setTimeout(() => showPage('home'), 1500);
 }

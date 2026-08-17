@@ -30,9 +30,9 @@
     <nav class="nav-links" id="nav-links" role="navigation" aria-label="Main navigation">
       <a href="#" onclick="showPage('home');return false;">Home</a>
       <a href="#" onclick="showPage('shop');return false;">Shop</a>
-      <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('categories'),200);return false;">Categories</a>
-      <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('trending'),200);return false;">Trending</a>
-      <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('new-arrivals'),200);return false;">New Arrivals</a>
+      <a href="#" onclick="navigateToSection('categories');return false;">Categories</a>
+      <a href="#" onclick="navigateToSection('trending');return false;">Trending</a>
+      <a href="#" onclick="navigateToSection('new-arrivals');return false;">New Arrivals</a>
       <a href="#" onclick="showPage('about');return false;">About</a>
       <a href="#" onclick="showPage('contact');return false;">Contact</a>
     </nav>
@@ -57,9 +57,9 @@
   <div class="mobile-menu" id="mobile-menu">
     <a href="#" onclick="showPage('home');closeMobileMenu();return false;">Home</a>
     <a href="#" onclick="showPage('shop');closeMobileMenu();return false;">Shop</a>
-    <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('categories'),200);closeMobileMenu();return false;">Categories</a>
-    <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('trending'),200);closeMobileMenu();return false;">Trending</a>
-    <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('new-arrivals'),200);closeMobileMenu();return false;">New Arrivals</a>
+    <a href="#" onclick="navigateToSection('categories');closeMobileMenu();return false;">Categories</a>
+    <a href="#" onclick="navigateToSection('trending');closeMobileMenu();return false;">Trending</a>
+    <a href="#" onclick="navigateToSection('new-arrivals');closeMobileMenu();return false;">New Arrivals</a>
     <a href="#" onclick="showPage('about');closeMobileMenu();return false;">About</a>
     <a href="#" onclick="showPage('contact');closeMobileMenu();return false;">Contact</a>
     <a href="#" onclick="showPage('wishlist');closeMobileMenu();return false;">Wishlist</a>
@@ -263,14 +263,14 @@
       </div>
       <div class="fp-group">
         <h4>CATEGORY</h4>
-        <label><input type="checkbox" class="cat-cb" value="all" checked onchange="applyFilters()"/> All</label>
-        <label><input type="checkbox" class="cat-cb" value="Clothing" onchange="applyFilters()"/> Clothing</label>
-        <label><input type="checkbox" class="cat-cb" value="Footwear" onchange="applyFilters()"/> Footwear</label>
-        <label><input type="checkbox" class="cat-cb" value="Accessories" onchange="applyFilters()"/> Accessories</label>
-        <label><input type="checkbox" class="cat-cb" value="Bags" onchange="applyFilters()"/> Bags</label>
-        <label><input type="checkbox" class="cat-cb" value="Electronics" onchange="applyFilters()"/> Electronics</label>
-        <label><input type="checkbox" class="cat-cb" value="Lifestyle" onchange="applyFilters()"/> Lifestyle</label>
-        <label><input type="checkbox" class="cat-cb" value="Home" onchange="applyFilters()"/> Home</label>
+        <label><input type="checkbox" class="cat-cb" value="all" checked onchange="handleCategoryChange(this)"/> All</label>
+        <label><input type="checkbox" class="cat-cb" value="Clothing" onchange="handleCategoryChange(this)"/> Clothing</label>
+        <label><input type="checkbox" class="cat-cb" value="Footwear" onchange="handleCategoryChange(this)"/> Footwear</label>
+        <label><input type="checkbox" class="cat-cb" value="Accessories" onchange="handleCategoryChange(this)"/> Accessories</label>
+        <label><input type="checkbox" class="cat-cb" value="Bags" onchange="handleCategoryChange(this)"/> Bags</label>
+        <label><input type="checkbox" class="cat-cb" value="Electronics" onchange="handleCategoryChange(this)"/> Electronics</label>
+        <label><input type="checkbox" class="cat-cb" value="Lifestyle" onchange="handleCategoryChange(this)"/> Lifestyle</label>
+        <label><input type="checkbox" class="cat-cb" value="Home" onchange="handleCategoryChange(this)"/> Home</label>
       </div>
       <div class="fp-group">
         <h4>PRICE</h4>
@@ -324,14 +324,14 @@
       <div class="mfs-body">
         <div class="fp-group">
           <h4>CATEGORY</h4>
-          <label><input type="checkbox" class="cat-mob" value="all" checked onchange="applyFilters()"/> All</label>
-          <label><input type="checkbox" class="cat-mob" value="Clothing" onchange="applyFilters()"/> Clothing</label>
-          <label><input type="checkbox" class="cat-mob" value="Footwear" onchange="applyFilters()"/> Footwear</label>
-          <label><input type="checkbox" class="cat-mob" value="Accessories" onchange="applyFilters()"/> Accessories</label>
-          <label><input type="checkbox" class="cat-mob" value="Bags" onchange="applyFilters()"/> Bags</label>
-          <label><input type="checkbox" class="cat-mob" value="Electronics" onchange="applyFilters()"/> Electronics</label>
-          <label><input type="checkbox" class="cat-mob" value="Lifestyle" onchange="applyFilters()"/> Lifestyle</label>
-          <label><input type="checkbox" class="cat-mob" value="Home" onchange="applyFilters()"/> Home</label>
+          <label><input type="checkbox" class="cat-mob" value="all" checked onchange="handleCategoryChange(this)"/> All</label>
+          <label><input type="checkbox" class="cat-mob" value="Clothing" onchange="handleCategoryChange(this)"/> Clothing</label>
+          <label><input type="checkbox" class="cat-mob" value="Footwear" onchange="handleCategoryChange(this)"/> Footwear</label>
+          <label><input type="checkbox" class="cat-mob" value="Accessories" onchange="handleCategoryChange(this)"/> Accessories</label>
+          <label><input type="checkbox" class="cat-mob" value="Bags" onchange="handleCategoryChange(this)"/> Bags</label>
+          <label><input type="checkbox" class="cat-mob" value="Electronics" onchange="handleCategoryChange(this)"/> Electronics</label>
+          <label><input type="checkbox" class="cat-mob" value="Lifestyle" onchange="handleCategoryChange(this)"/> Lifestyle</label>
+          <label><input type="checkbox" class="cat-mob" value="Home" onchange="handleCategoryChange(this)"/> Home</label>
         </div>
         <div class="fp-group">
           <h4>SORT BY</h4>
@@ -533,7 +533,7 @@
       <div class="f-logo">ATZ <span class="f-logo-services">Services</span></div>
       <p class="f-powered">Powered by ATZ Marketplace LLC</p>
     </div>
-    <div class="f-col"><h4>Shop</h4><a href="#" onclick="showPage('shop');return false;">All Products</a><a href="#" onclick="showPage('home');scrollToSection('new-arrivals');return false;">New Arrivals</a><a href="#" onclick="showPage('home');scrollToSection('trending');return false;">Trending</a><a href="#" onclick="showPage('home');scrollToSection('best-sellers');return false;">Best Sellers</a><a href="#" onclick="showPage('shop');return false;">Sale</a></div>
+    <div class="f-col"><h4>Shop</h4><a href="#" onclick="showPage('shop');return false;">All Products</a><a href="#" onclick="navigateToSection('new-arrivals');return false;">New Arrivals</a><a href="#" onclick="navigateToSection('trending');return false;">Trending</a><a href="#" onclick="navigateToSection('best-sellers');return false;">Best Sellers</a><a href="#" onclick="showPage('shop');return false;">Sale</a></div>
     <div class="f-col"><h4>Help</h4><a href="#" onclick="showPage('contact');return false;">Contact Us</a><a href="#" onclick="showPage('contact');return false;">FAQ</a><a href="#">Shipping Info</a><a href="#">Returns</a><a href="#">Track Order</a></div>
     <div class="f-col"><h4>Company</h4><a href="#" onclick="showPage('about');return false;">About ATZ</a><a href="#" onclick="showPage('about');return false;">Our Story</a><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
   </div>
