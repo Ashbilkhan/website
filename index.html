@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ATZ — The New Standard of Everyday Essentials</title>
+<meta name="description" content="ATZ is a premium modern lifestyle brand. Shop minimal watches, sneakers, clothing, bags, electronics and more. Designed for modern living."/>
+<meta property="og:title" content="ATZ — Premium Modern Essentials"/>
+<meta property="og:description" content="Curated for your everyday. Designed for modern living."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div id="announcement-bar" class="announcement-bar">
+  <p>FREE SHIPPING ON ORDERS OVER $100 &nbsp;&mdash;&nbsp; <a href="#" onclick="showPage('shop');return false;">SHOP NOW</a></p>
+  <button class="announce-close" onclick="dismissAnnouncement()" aria-label="Dismiss">&times;</button>
+</div>
+
+<!-- NAVBAR -->
+<header id="navbar" class="navbar">
+  <div class="nav-inner">
+    <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="#" class="logo" onclick="showPage('home');return false;">ATZ Marketplace</a>
+    <nav class="nav-links" id="nav-links" role="navigation" aria-label="Main navigation">
+      <a href="#" onclick="showPage('home');return false;">Home</a>
+      <a href="#" onclick="showPage('shop');return false;">Shop</a>
+      <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('categories'),200);return false;">Categories</a>
+      <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('trending'),200);return false;">Trending</a>
+      <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('new-arrivals'),200);return false;">New Arrivals</a>
+      <a href="#" onclick="showPage('about');return false;">About</a>
+      <a href="#" onclick="showPage('contact');return false;">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" aria-label="Search" onclick="openSearch()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="nav-icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">
+        <svg class="sun-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="nav-icon-btn" aria-label="Wishlist" onclick="showPage('wishlist');return false;" style="position:relative;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span class="badge-count" id="wishlist-count" style="display:none">0</span>
+      </button>
+      <button class="nav-icon-btn cart-icon-btn" aria-label="Shopping cart" onclick="openCart()" style="position:relative;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="badge-count" id="cart-count" style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#" onclick="showPage('home');closeMobileMenu();return false;">Home</a>
+    <a href="#" onclick="showPage('shop');closeMobileMenu();return false;">Shop</a>
+    <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('categories'),200);closeMobileMenu();return false;">Categories</a>
+    <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('trending'),200);closeMobileMenu();return false;">Trending</a>
+    <a href="#" onclick="showPage('home');setTimeout(()=>scrollToSection('new-arrivals'),200);closeMobileMenu();return false;">New Arrivals</a>
+    <a href="#" onclick="showPage('about');closeMobileMenu();return false;">About</a>
+    <a href="#" onclick="showPage('contact');closeMobileMenu();return false;">Contact</a>
+    <a href="#" onclick="showPage('wishlist');closeMobileMenu();return false;">Wishlist</a>
+    <a href="#" onclick="openCart();closeMobileMenu();return false;">Cart</a>
+  </div>
+</header>
+
+<!-- SEARCH MODAL -->
+<div class="search-overlay" id="search-overlay" role="dialog" aria-label="Search" aria-modal="true">
+  <div class="search-modal" onclick="event.stopPropagation()">
+    <div class="search-bar-wrap">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="search" id="search-input" placeholder="Search for watches, sneakers, bags..." oninput="performSearch(this.value)" autocomplete="off" aria-label="Search products"/>
+      <button class="search-close-x" onclick="closeSearch()" aria-label="Close search">&times;</button>
+    </div>
+    <div id="search-results" class="search-results"></div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/19432629641?text=Hi%2C%20I%20have%20a%20question%20about%20your%20products." target="_blank" rel="noopener noreferrer" class="whatsapp-fab" id="whatsapp-fab" aria-label="Chat with us on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+  <span class="wa-tooltip">Chat with us on WhatsApp</span>
+</a>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCartOutside(event)">
+  <div class="cart-drawer" id="cart-drawer" role="dialog" aria-label="Shopping cart" aria-modal="true">
+    <div class="cart-header">
+      <h2>Your Bag <span id="cart-header-count">(0 items)</span></h2>
+      <button class="cart-close-btn" onclick="closeCart()" aria-label="Close cart">&times;</button>
+    </div>
+    <div class="free-ship-progress" id="free-ship-bar"></div>
+    <div class="cart-items" id="cart-items-list"></div>
+    <div class="cart-footer" id="cart-footer-area"></div>
+  </div>
+</div>
+
+<!-- QUICK VIEW MODAL -->
+<div class="quickview-overlay" id="quickview-overlay" onclick="closeQuickView(event)">
+  <div class="quickview-modal" id="quickview-modal" onclick="event.stopPropagation()">
+    <button class="qv-close" onclick="closeQuickView()" aria-label="Close">&times;</button>
+    <div id="quickview-content"></div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="main-content">
+
+<!-- ========== HOME PAGE ========== -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <span class="hero-label">NEW SEASON / 2026 COLLECTION</span>
+      <h1 class="hero-title">THE NEW STANDARD<br>OF EVERYDAY<br><em>ESSENTIALS</em></h1>
+      <p class="hero-sub">Designed for modern living.<br>Curated for your everyday.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="showPage('shop')">Shop Collection</button>
+        <button class="btn btn-ghost" onclick="scrollToSection('trending')">Explore Trending</button>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <img src="images/hero_lifestyle_1786984726222.jpg" alt="ATZ 2026 Collection — Premium minimal fashion" loading="eager"/>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <section class="trust-bar">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <div><strong>Free Shipping</strong><span>On orders over $100</span></div>
+      </div>
+      <div class="trust-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div><strong>Secure Checkout</strong><span>256-bit SSL encrypted</span></div>
+      </div>
+      <div class="trust-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="23 4 23 10 17 10"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        <div><strong>Easy Returns</strong><span>30-day return policy</span></div>
+      </div>
+      <div class="trust-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <div><strong>Customer Support</strong><span>We're here to help</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section" id="categories">
+    <div class="container">
+      <div class="sec-head">
+        <div><h2 class="sec-title">SHOP BY CATEGORY</h2><p class="sec-sub">Find exactly what you're looking for</p></div>
+      </div>
+      <div class="categories-grid" id="categories-grid"></div>
+    </div>
+  </section>
+
+  <!-- BEST SELLERS -->
+  <section class="section" id="best-sellers">
+    <div class="container">
+      <div class="sec-head">
+        <div><span class="sec-tag">BEST SELLERS</span><h2 class="sec-title">Customer Favourites</h2></div>
+        <a href="#" class="view-all" onclick="showPage('shop');return false;">View All &rarr;</a>
+      </div>
+      <div class="product-grid" id="bestseller-grid"></div>
+    </div>
+  </section>
+
+  <!-- TRENDING -->
+  <section class="section dark-section" id="trending">
+    <div class="container">
+      <div class="sec-head">
+        <div><span class="sec-tag">TRENDING RIGHT NOW</span><h2 class="sec-title">Popular Picks</h2><p class="sec-sub">Pieces our customers can't stop talking about.</p></div>
+        <a href="#" class="view-all" onclick="showPage('shop');return false;">View All &rarr;</a>
+      </div>
+      <div class="product-grid" id="trending-grid"></div>
+    </div>
+  </section>
+
+  <!-- PROMO BANNER -->
+  <section class="promo-strip">
+    <div class="promo-content">
+      <span class="promo-tag">LIMITED TIME</span>
+      <h2>UP TO 30% OFF<br>SELECTED PRODUCTS</h2>
+      <p>Premium quality, now at exceptional value.</p>
+      <button class="btn btn-white" onclick="showPage('shop')">Shop Sale</button>
+    </div>
+  </section>
+
+  <!-- NEW ARRIVALS -->
+  <section class="section" id="new-arrivals">
+    <div class="container">
+      <div class="sec-head">
+        <div><span class="sec-tag">JUST DROPPED</span><h2 class="sec-title">New Arrivals</h2></div>
+        <a href="#" class="view-all" onclick="showPage('shop');return false;">View All New Arrivals &rarr;</a>
+      </div>
+      <div class="product-grid" id="newarrivals-grid"></div>
+    </div>
+  </section>
+
+  <!-- RECENTLY VIEWED -->
+  <section class="section" id="recently-viewed-section" style="display:none">
+    <div class="container">
+      <div class="sec-head"><h2 class="sec-title">RECENTLY VIEWED</h2></div>
+      <div class="product-grid" id="recently-viewed-grid"></div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section reviews-sec">
+    <div class="container">
+      <div class="sec-head center-head">
+        <h2 class="sec-title">LOVED BY OUR CUSTOMERS</h2>
+        <p class="sec-sub">Real people. Real reviews.</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Beautiful quality and packaging was excellent. The watch looks even better in person — absolutely stunning."</p><span>— Sarah M.</span></div>
+        <div class="review-card"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"The sneakers are incredibly comfortable. The minimal design goes with literally everything. My new everyday pair."</p><span>— James K.</span></div>
+        <div class="review-card"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Fast shipping, premium packaging and hoodie quality beyond expectations. 10/10 would order again."</p><span>— Amara L.</span></div>
+        <div class="review-card"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div><p>"The leather backpack is exactly what I needed for my commute. Stylish, roomy and very well-made."</p><span>— Daniel R.</span></div>
+        <div class="review-card"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Ordered the headphones — blown away by sound AND design. ATZ is now my go-to store for everything."</p><span>— Priya S.</span></div>
+        <div class="review-card"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Clean, minimal, premium. The sunglasses are exactly what I was looking for. Support team was amazing."</p><span>— Marcus T.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter-sec">
+    <div class="container">
+      <div class="newsletter-box">
+        <h2>GET 10% OFF YOUR FIRST ORDER</h2>
+        <p>Join our community for new arrivals, exclusive drops and special offers.</p>
+        <form class="nl-form" onsubmit="subscribeNewsletter(event)">
+          <input type="email" id="nl-email" placeholder="Enter your email address" required aria-label="Email address"/>
+          <button type="submit" class="btn btn-primary">Get 10% Off</button>
+        </form>
+        <span class="nl-privacy">No spam, ever. Unsubscribe anytime. &nbsp;<a href="#">Privacy Policy</a></span>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-home -->
+
+<!-- ========== SHOP PAGE ========== -->
+<div id="page-shop" class="page">
+  <div class="page-hero">
+    <h1>All Products</h1>
+    <p>Premium essentials, curated for modern living.</p>
+  </div>
+  <div class="container shop-wrap">
+    <aside class="filter-panel" id="filter-panel">
+      <div class="fp-head">
+        <strong>FILTERS</strong>
+        <button class="clear-btn" onclick="clearFilters()">Clear All</button>
+      </div>
+      <div class="fp-group">
+        <h4>CATEGORY</h4>
+        <label><input type="checkbox" class="cat-cb" value="all" checked onchange="applyFilters()"/> All</label>
+        <label><input type="checkbox" class="cat-cb" value="Clothing" onchange="applyFilters()"/> Clothing</label>
+        <label><input type="checkbox" class="cat-cb" value="Footwear" onchange="applyFilters()"/> Footwear</label>
+        <label><input type="checkbox" class="cat-cb" value="Accessories" onchange="applyFilters()"/> Accessories</label>
+        <label><input type="checkbox" class="cat-cb" value="Bags" onchange="applyFilters()"/> Bags</label>
+        <label><input type="checkbox" class="cat-cb" value="Electronics" onchange="applyFilters()"/> Electronics</label>
+        <label><input type="checkbox" class="cat-cb" value="Lifestyle" onchange="applyFilters()"/> Lifestyle</label>
+        <label><input type="checkbox" class="cat-cb" value="Home" onchange="applyFilters()"/> Home</label>
+      </div>
+      <div class="fp-group">
+        <h4>PRICE</h4>
+        <label><input type="radio" name="pr" value="all" checked onchange="applyFilters()"/> All Prices</label>
+        <label><input type="radio" name="pr" value="0-50" onchange="applyFilters()"/> Under $50</label>
+        <label><input type="radio" name="pr" value="50-100" onchange="applyFilters()"/> $50 – $100</label>
+        <label><input type="radio" name="pr" value="100-200" onchange="applyFilters()"/> Over $100</label>
+      </div>
+      <div class="fp-group">
+        <h4>RATING</h4>
+        <label><input type="radio" name="rt" value="all" checked onchange="applyFilters()"/> All</label>
+        <label><input type="radio" name="rt" value="4.8" onchange="applyFilters()"/> 4.8&#9733; &amp; above</label>
+        <label><input type="radio" name="rt" value="4.5" onchange="applyFilters()"/> 4.5&#9733; &amp; above</label>
+      </div>
+      <div class="fp-group">
+        <h4>COLLECTION</h4>
+        <label><input type="checkbox" id="fn-new" onchange="applyFilters()"/> New Arrivals</label>
+        <label><input type="checkbox" id="fn-best" onchange="applyFilters()"/> Best Sellers</label>
+        <label><input type="checkbox" id="fn-sale" onchange="applyFilters()"/> On Sale</label>
+        <label><input type="checkbox" id="fn-trend" onchange="applyFilters()"/> Trending</label>
+      </div>
+    </aside>
+    <div class="shop-main">
+      <div class="shop-toolbar">
+        <span id="count-label">12 products</span>
+        <div class="toolbar-right">
+          <select id="sort-sel" onchange="applyFilters()" aria-label="Sort products">
+            <option value="featured">Featured</option>
+            <option value="newest">Newest</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Highest Rated</option>
+            <option value="popular">Most Popular</option>
+          </select>
+          <button class="filter-mob-btn" onclick="openMobFilter()">&#9776; Filters</button>
+        </div>
+      </div>
+      <div class="product-grid" id="shop-grid"></div>
+      <div id="shop-empty" class="empty-state" style="display:none">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <h3>No products found</h3>
+        <p>Try searching for something different.</p>
+        <button class="btn btn-primary" onclick="clearFilters()">Clear Filters</button>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile filter sheet -->
+  <div class="mob-filter-bg" id="mob-filter-bg" onclick="closeMobFilter(event)">
+    <div class="mob-filter-sheet" onclick="event.stopPropagation()">
+      <div class="mfs-head"><strong>FILTER &amp; SORT</strong><button onclick="closeMobFilterBtn()">&times;</button></div>
+      <div class="mfs-body">
+        <div class="fp-group">
+          <h4>CATEGORY</h4>
+          <label><input type="checkbox" class="cat-mob" value="all" checked onchange="applyFilters()"/> All</label>
+          <label><input type="checkbox" class="cat-mob" value="Clothing" onchange="applyFilters()"/> Clothing</label>
+          <label><input type="checkbox" class="cat-mob" value="Footwear" onchange="applyFilters()"/> Footwear</label>
+          <label><input type="checkbox" class="cat-mob" value="Accessories" onchange="applyFilters()"/> Accessories</label>
+          <label><input type="checkbox" class="cat-mob" value="Bags" onchange="applyFilters()"/> Bags</label>
+          <label><input type="checkbox" class="cat-mob" value="Electronics" onchange="applyFilters()"/> Electronics</label>
+          <label><input type="checkbox" class="cat-mob" value="Lifestyle" onchange="applyFilters()"/> Lifestyle</label>
+          <label><input type="checkbox" class="cat-mob" value="Home" onchange="applyFilters()"/> Home</label>
+        </div>
+        <div class="fp-group">
+          <h4>SORT BY</h4>
+          <label><input type="radio" name="mob-sort" value="featured" checked onchange="document.getElementById('sort-sel').value=this.value;applyFilters()"/> Featured</label>
+          <label><input type="radio" name="mob-sort" value="price-asc" onchange="document.getElementById('sort-sel').value=this.value;applyFilters()"/> Price: Low to High</label>
+          <label><input type="radio" name="mob-sort" value="price-desc" onchange="document.getElementById('sort-sel').value=this.value;applyFilters()"/> Price: High to Low</label>
+          <label><input type="radio" name="mob-sort" value="rating" onchange="document.getElementById('sort-sel').value=this.value;applyFilters()"/> Highest Rated</label>
+        </div>
+      </div>
+      <div class="mfs-foot">
+        <button class="btn btn-outline" onclick="clearFilters()">Clear All</button>
+        <button class="btn btn-primary" onclick="closeMobFilterBtn()">Apply</button>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-shop -->
+
+<!-- ========== PRODUCT DETAIL ========== -->
+<div id="page-product" class="page">
+  <div class="container" id="product-detail-wrap"></div>
+  <section class="section" id="reco-section">
+    <div class="container">
+      <div class="sec-head"><h2 class="sec-title">YOU MAY ALSO LIKE</h2></div>
+      <div class="product-grid" id="reco-grid"></div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="sec-head"><h2 class="sec-title">COMPLETE THE LOOK</h2></div>
+      <div class="product-grid" id="complete-grid"></div>
+    </div>
+  </section>
+</div><!-- /page-product -->
+
+<!-- ========== WISHLIST ========== -->
+<div id="page-wishlist" class="page">
+  <div class="page-hero">
+    <h1>Your Wishlist</h1>
+    <p>Save the pieces you love.</p>
+  </div>
+  <div class="container">
+    <div class="product-grid" id="wishlist-grid"></div>
+    <div id="wishlist-empty" class="empty-state" style="display:none">
+      <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <h3>Your wishlist is empty</h3>
+      <p>Save the pieces you love.</p>
+      <button class="btn btn-primary" onclick="showPage('shop')">Explore Products</button>
+    </div>
+  </div>
+</div><!-- /page-wishlist -->
+
+<!-- ========== CHECKOUT ========== -->
+<div id="page-checkout" class="page">
+  <div class="page-hero"><h1>Checkout</h1></div>
+  <div class="container checkout-wrap">
+    <div class="checkout-form">
+      <div class="co-section">
+        <h3>01 &mdash; Contact Information</h3>
+        <div class="form-row">
+          <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+          <div class="fg"><label>Phone</label><input type="tel" placeholder="+1 (555) 000-0000"/></div>
+        </div>
+      </div>
+      <div class="co-section">
+        <h3>02 &mdash; Shipping Address</h3>
+        <div class="form-row">
+          <div class="fg"><label>First Name</label><input type="text" placeholder="John"/></div>
+          <div class="fg"><label>Last Name</label><input type="text" placeholder="Doe"/></div>
+        </div>
+        <div class="fg full"><label>Street Address</label><input type="text" placeholder="123 Main Street, Apt 4B"/></div>
+        <div class="form-row three">
+          <div class="fg"><label>City</label><input type="text" placeholder="New York"/></div>
+          <div class="fg"><label>State</label><input type="text" placeholder="NY"/></div>
+          <div class="fg"><label>ZIP</label><input type="text" placeholder="10001"/></div>
+        </div>
+        <div class="fg full"><label>Country</label>
+          <select><option>United States</option><option>United Kingdom</option><option>Canada</option><option>Australia</option><option>Pakistan</option><option>India</option><option>UAE</option></select>
+        </div>
+      </div>
+      <div class="co-section">
+        <h3>03 &mdash; Delivery Method</h3>
+        <div class="delivery-opts">
+          <label class="del-opt active-del">
+            <input type="radio" name="del" value="standard" checked/>
+            <div class="del-info"><strong>Standard Shipping</strong><span>5&ndash;7 business days</span></div>
+            <span class="del-price">$8.00</span>
+          </label>
+          <label class="del-opt">
+            <input type="radio" name="del" value="express"/>
+            <div class="del-info"><strong>Express Shipping</strong><span>2&ndash;3 business days</span></div>
+            <span class="del-price">$18.00</span>
+          </label>
+        </div>
+      </div>
+      <div class="co-section">
+        <h3>04 &mdash; Payment</h3>
+        <div class="payment-area">
+          <div class="fake-card">
+            <div class="fc-chip"></div>
+            <div class="fc-num">&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;</div>
+            <div class="fc-bot"><span>Card Holder Name</span><span>MM / YY</span></div>
+          </div>
+          <div class="fg full"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19"/></div>
+          <div class="form-row">
+            <div class="fg"><label>Expiry</label><input type="text" placeholder="MM / YY"/></div>
+            <div class="fg"><label>CVC</label><input type="text" placeholder="&bull;&bull;&bull;" maxlength="3"/></div>
+          </div>
+          <div class="fg full"><label>Name on Card</label><input type="text" placeholder="John Doe"/></div>
+          <p class="secure-note">&#128274; Your payment is encrypted and secure. We never store card details.</p>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="placeOrder()">Place Order</button>
+    </div>
+    <div class="co-summary" id="co-summary-box"></div>
+  </div>
+</div><!-- /page-checkout -->
+
+<!-- ========== ABOUT ========== -->
+<div id="page-about" class="page">
+  <div class="page-hero"><h1>About ATZ</h1><p>Modern &bull; Premium &bull; Minimal &bull; Trustworthy</p></div>
+  <div class="container about-wrap">
+    <div class="about-body">
+      <h2>Our Story</h2>
+      <p>ATZ was born from a simple belief: that everyday essentials should be anything but ordinary. We create products that combine thoughtful design, premium materials and lasting quality — because the things you reach for every day deserve to be exceptional.</p>
+      <p>We work directly with carefully selected manufacturers to cut out the middleman, offering genuine premium quality at honest prices. Every product in our catalog is tested, refined and curated to meet our exacting standards.</p>
+      <h2>Our Philosophy</h2>
+      <p>Less, but better. We believe in building a focused collection of products that truly excel rather than overwhelming you with choice. Each piece in the ATZ collection is here because it earned its place — through quality, function and design.</p>
+      <p>We're obsessed with the details — the weight of a fabric, the finish of a strap, the balance of a dial. The difference between ordinary and extraordinary lives in the details others overlook.</p>
+      <div class="about-stats">
+        <div class="stat-box"><strong>12+</strong><span>Curated Products</span></div>
+        <div class="stat-box"><strong>50k+</strong><span>Happy Customers</span></div>
+        <div class="stat-box"><strong>4.8&#9733;</strong><span>Average Rating</span></div>
+        <div class="stat-box"><strong>30-Day</strong><span>Easy Returns</span></div>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-about -->
+
+<!-- ========== CONTACT ========== -->
+<div id="page-contact" class="page">
+  <div class="page-hero"><h1>Contact Us</h1><p>We'd love to hear from you.</p></div>
+  <div class="container contact-wrap">
+    <div class="contact-info">
+      <h3>Get In Touch</h3>
+      <p>Have a question about an order or product? We're here to help.</p>
+      <div class="c-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        <a href="https://wa.me/19432629641" target="_blank">+1 943 262 9641</a>
+      </div>
+      <div class="c-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:atzmarketplacellc@gmail.com">atzmarketplacellc@gmail.com</a>
+      </div>
+      <div class="c-item support-hours">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div><strong>Customer Support Hours</strong><br/>Mon &ndash; Fri: 10:00 AM &ndash; 5:00 PM<br/>Saturday &amp; Sunday: Closed</div>
+      </div>
+      <div class="faq-wrap">
+        <h3>Frequently Asked Questions</h3>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFAQ(this)">How long does shipping take? <span>+</span></button>
+          <div class="faq-ans">Standard shipping takes 5–7 business days. Express takes 2–3 days.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFAQ(this)">Can I return my order? <span>+</span></button>
+          <div class="faq-ans">Yes! We have a 30-day hassle-free return policy. Contact us to start.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFAQ(this)">Do you ship internationally? <span>+</span></button>
+          <div class="faq-ans">Yes, we ship worldwide. International orders typically arrive in 10–15 days.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFAQ(this)">How do I track my order? <span>+</span></button>
+          <div class="faq-ans">You'll receive a tracking link via email as soon as your order ships.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFAQ(this)">Are your products authentic? <span>+</span></button>
+          <div class="faq-ans">100%. We source directly from our manufacturing partners with strict quality control at every step.</div>
+        </div>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="submitContact(event)">
+      <h3>Send a Message</h3>
+      <div class="fg"><label>Your Name</label><input type="text" placeholder="John Doe" required/></div>
+      <div class="fg"><label>Email Address</label><input type="email" placeholder="your@email.com" required/></div>
+      <div class="fg"><label>Subject</label><input type="text" placeholder="Order inquiry, product question..."/></div>
+      <div class="fg"><label>Message</label><textarea rows="5" placeholder="Tell us how we can help..."></textarea></div>
+      <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+    </form>
+  </div>
+</div><!-- /page-contact -->
+
+</main><!-- /main-content -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="f-logo">ATZ <span class="f-logo-services">Services</span></div>
+      <p class="f-powered">Powered by ATZ Marketplace LLC</p>
+    </div>
+    <div class="f-col"><h4>Shop</h4><a href="#" onclick="showPage('shop');return false;">All Products</a><a href="#" onclick="showPage('home');scrollToSection('new-arrivals');return false;">New Arrivals</a><a href="#" onclick="showPage('home');scrollToSection('trending');return false;">Trending</a><a href="#" onclick="showPage('home');scrollToSection('best-sellers');return false;">Best Sellers</a><a href="#" onclick="showPage('shop');return false;">Sale</a></div>
+    <div class="f-col"><h4>Help</h4><a href="#" onclick="showPage('contact');return false;">Contact Us</a><a href="#" onclick="showPage('contact');return false;">FAQ</a><a href="#">Shipping Info</a><a href="#">Returns</a><a href="#">Track Order</a></div>
+    <div class="f-col"><h4>Company</h4><a href="#" onclick="showPage('about');return false;">About ATZ</a><a href="#" onclick="showPage('about');return false;">Our Story</a><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+  </div>
+  <!-- SINGLE CONTACT STRIP -->
+  <div class="footer-contact-strip">
+    <div class="footer-contact-strip-inner">
+      <div class="fcs-group">
+        <span class="fcs-label">Customer Support</span>
+        <span class="fcs-sep"></span>
+        <span class="fcs-text">Mon &ndash; Fri: 10AM &ndash; 5PM &nbsp;|&nbsp; Sat &ndash; Sun: Closed</span>
+      </div>
+      <span class="fcs-divider"></span>
+      <div class="fcs-group">
+        <span class="fcs-label">Contact</span>
+        <span class="fcs-sep"></span>
+        <a href="mailto:atzmarketplacellc@gmail.com">atzmarketplacellc@gmail.com</a>
+        <span class="fcs-dot">&bull;</span>
+        <a href="https://wa.me/19432629641">+1 943 262 9641</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 ATZ. All rights reserved.</span>
+    <div class="pay-icons"><span>VISA</span><span>MC</span><span>AMEX</span><span>PAYPAL</span><span>APPLE PAY</span></div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
