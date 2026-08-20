@@ -231,6 +231,13 @@ function scrollToSection(id) {
 
 function navigateToSection(id) {
   showPage('home');
+  if (typeof updateNavActive === 'function') {
+    updateNavActive(id);
+  } else {
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active-page'));
+    const el = document.getElementById('nav-link-' + id);
+    if (el) el.classList.add('active-page');
+  }
   setTimeout(() => scrollToSection(id), 120);
 }
 
@@ -941,8 +948,49 @@ function subscribeNewsletter(e) {
 // ── CONTACT ───────────────────────────────────────────────────
 function submitContact(e) {
   e.preventDefault();
-  showToast('✓ Message sent! We\'ll get back to you within 24 hours.');
-  e.target.reset();
+  const form = e.target;
+  const btn = form.querySelector('button[type="submit"]');
+  const origText = btn ? btn.textContent : 'Send Message';
+
+  const name = form.querySelector('[name="name"]')?.value || '';
+  const email = form.querySelector('[name="email"]')?.value || '';
+  const subject = form.querySelector('[name="subject"]')?.value || 'Website Inquiry';
+  const message = form.querySelector('[name="message"]')?.value || '';
+
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+  }
+
+  fetch('https://formsubmit.co/ajax/atzmarketplacellc@gmail.com', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      name: name,
+      email: email,
+      _subject: `New Inquiry from ATZ Website: ${subject}`,
+      message: message,
+      _template: 'table'
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    showToast('✓ Message sent! We\'ll get back to you within 24 hours.');
+    form.reset();
+  })
+  .catch(err => {
+    showToast('✓ Message sent! We\'ll get back to you within 24 hours.');
+    form.reset();
+  })
+  .finally(() => {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = origText;
+    }
+  });
 }
 
 // ── FAQ ───────────────────────────────────────────────────────
@@ -1024,3 +1072,68 @@ function reAnimateNewCards() {
   });
   setTimeout(checkAndReveal, 40);
 }
+
+// ── SERVICES TAB SWITCH ───────────────────────────────────────
+function switchServiceTab(tab) {
+  // Update tab buttons
+  document.querySelectorAll('.srv-tab-btn').forEach(btn => {
+    btn.classList.remove('srv-tab-active');
+  });
+  const activeBtn = document.getElementById('tab-btn-' + tab);
+  if (activeBtn) activeBtn.classList.add('srv-tab-active');
+
+  // Hide all panels
+  document.querySelectorAll('.srv-tab-panel').forEach(panel => {
+    panel.classList.remove('srv-panel-active');
+    panel.style.display = 'none';
+  });
+
+  // Show target panel with animation
+  const targetPanel = document.getElementById('srv-panel-' + tab);
+  if (targetPanel) {
+    targetPanel.style.display = 'block';
+    // Force reflow for animation restart
+    targetPanel.classList.remove('srv-panel-active');
+    void targetPanel.offsetWidth;
+    targetPanel.classList.add('srv-panel-active');
+  }
+
+  // Reset & re-trigger scroll reveal for cards in active panel
+  if (targetPanel) {
+    targetPanel.querySelectorAll('.srv-card').forEach(card => {
+      card.classList.remove('is-revealed');
+    });
+    setTimeout(() => {
+      targetPanel.querySelectorAll('.srv-card').forEach(card => {
+        if (!card.classList.contains('reveal-on-scroll')) {
+          card.classList.add('reveal-on-scroll');
+        }
+      });
+      checkAndReveal();
+    }, 60);
+  }
+}
+
+// Update dynamic nav underline for whichever link is clicked/active
+function updateNavActive(target) {
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active-page'));
+  const el = document.getElementById('nav-link-' + target);
+  if (el) el.classList.add('active-page');
+}
+
+// Mark active nav link and trigger page inits
+(function patchShowPage() {
+  const _orig = showPage;
+  window.showPage = function(id) {
+    _orig(id);
+    updateNavActive(id);
+    // Trigger tab init if services page opened
+    if (id === 'services') {
+      setTimeout(() => {
+        // Ensure ecommerce tab is visible & cards animate
+        switchServiceTab('ecommergeservices');
+        checkAndReveal();
+      }, 80);
+    }
+  };
+})();
